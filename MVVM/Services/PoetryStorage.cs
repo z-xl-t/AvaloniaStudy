@@ -23,21 +23,9 @@ namespace MVVM.Services
             await Connection.CreateTableAsync<Poetry>();
         }
 
-        //等价上面的代码
-        //public SQLiteAsyncConnection GetConnection()
-        //{
-        //    if (_connection == null)
-        //    {
-        //        return _connection;
-        //    }
-
-        //    _connection = new SQLiteAsyncConnection(PoetryDbPath);
-        //    return _connection;
-        //}
-
         public async Task InsertAsync(Poetry poetry)
         {
-            throw new NotImplementedException();
+            await Connection.InsertAsync(poetry);
         }
     }
 }

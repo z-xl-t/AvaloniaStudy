@@ -2,6 +2,7 @@
 using MVVM.Models;
 using SQLite;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MVVM.Services
@@ -26,6 +27,18 @@ namespace MVVM.Services
         public async Task InsertAsync(Poetry poetry)
         {
             await Connection.InsertAsync(poetry);
+        }
+
+        public async Task<IList<Poetry>> ListAsync()
+        {
+            return await Connection.Table<Poetry>().ToListAsync();
+        }
+
+        public async Task<IList<Poetry>> QueryAsync(string keyword)
+        {
+            return await Connection.Table<Poetry>()
+                .Where(p => p.Name.Contains(keyword)) 
+                .ToListAsync();
         }
     }
 }

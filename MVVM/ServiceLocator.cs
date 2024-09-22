@@ -20,7 +20,6 @@ namespace MVVM
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<MainWindowViewModel>();
             serviceCollection.AddSingleton<IPoetryStorage, PoetryStorage>();
-
             _serviceProvider = serviceCollection.BuildServiceProvider();
         }
     }

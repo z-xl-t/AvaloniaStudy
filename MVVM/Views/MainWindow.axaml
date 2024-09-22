@@ -12,5 +12,15 @@
 	<StackPanel>
 		<TextBlock HorizontalAlignment="Center"  Text="{Binding Message}"/>
 		<Button Content="Click Me" Command="{Binding SayHelloCommand}"/>
+		<Button Content="Initialize" Command="{Binding InitialzeCommand}"></Button>
+		<Button Content="Insert" Command="{ Binding InsertCommand }"></Button>
+		<Button Content="List" Command="{ Binding ListCommand }"></Button>
+		<ItemsControl ItemsSource="{Binding Poetries }">
+			<ItemsControl.ItemTemplate>
+				<DataTemplate>
+					<TextBlock Text="{Binding Name}"></TextBlock>
+				</DataTemplate>
+			</ItemsControl.ItemTemplate>
+		</ItemsControl>
 	</StackPanel>
 </Window>

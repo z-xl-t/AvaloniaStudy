@@ -1,4 +1,5 @@
 ﻿using MVVM.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MVVM.Services
@@ -7,5 +8,8 @@ namespace MVVM.Services
     {
         Task InitialzeAsync();
         Task InsertAsync(Poetry poetry);
+
+        Task<IList<Poetry>> ListAsync();                                                                                                                                                          
+        Task<IList<Poetry>> QueryAsync(string keyword);
     }
 }

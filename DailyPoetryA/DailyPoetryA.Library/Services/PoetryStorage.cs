@@ -3,6 +3,7 @@ using DailyPoetryA.Library.Models;
 using SQLite;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -14,7 +15,7 @@ namespace DailyPoetryA.Library.Services
     {
         // 写死数据库里的数据个数，学习用；
         public const int NumberPoetry = 30;
-        public const string DbName = "poetry.sqlite3";
+        public const string DbName = "poetrydb.sqlite3";
         public static readonly string PoetryDbPath = PathHelper.GetLocalFilePath(DbName);
 
         private SQLiteAsyncConnection _connection;
@@ -22,7 +23,17 @@ namespace DailyPoetryA.Library.Services
             _connection ??= new SQLiteAsyncConnection(PoetryDbPath);
 
 
-        public bool IsInitialized { get; }
+        private readonly IPreferenceStorage _preferenceStorage;
+
+        public PoetryStorage(IPreferenceStorage preferenceStorage)
+        {
+            _preferenceStorage = preferenceStorage;
+        }
+
+
+        public bool IsInitialized =>
+            _preferenceStorage.Get(PoetryStorageConstant.VersionKey, 
+                default(int)) == PoetryStorageConstant.Version;
 
         public Task<Poetry> GetPoetryAsync(int id)
         {
@@ -40,11 +51,27 @@ namespace DailyPoetryA.Library.Services
             // 嵌入的资源，需要以流的形式写入指定路径
             await using var dbFileStream = 
                 new FileStream(PoetryDbPath, FileMode.OpenOrCreate);
+            //foreach (string resourceName in typeof(PoetryStorage).Assembly.GetManifestResourceNames())
+            //{
+            //    Debug.WriteLine(resourceName);
+            //}
+
+
             await using var dbAssetSteam = 
                 typeof(PoetryStorage).Assembly.GetManifestResourceStream(DbName);
             await dbAssetSteam.CopyToAsync(dbFileStream);
-            
-            
+
+            _preferenceStorage.Set(PoetryStorageConstant.VersionKey, PoetryStorageConstant.Version);
+
         }
+    }
+
+
+    // 静态类充当全局变量包
+    public static class PoetryStorageConstant
+    {
+        public const int Version = 1;
+
+        public const string VersionKey = nameof(PoetryStorageConstant) + "." + nameof(Version);
     }
 }

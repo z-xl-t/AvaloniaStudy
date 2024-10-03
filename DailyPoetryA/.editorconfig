@@ -2,3 +2,6 @@
 
 # IDE0032: 使用自动属性
 dotnet_style_prefer_auto_properties = true
+
+# IDE0032: 使用自动属性
+dotnet_diagnostic.IDE0032.severity = silent

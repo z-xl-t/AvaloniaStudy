@@ -28,10 +28,6 @@ namespace DailyPoetryA.Library.Services
         public PoetryStorage(IPreferenceStorage preferenceStorage)
         {
             _preferenceStorage = preferenceStorage;
-
-            if (!IsInitialized) {
-                Task.Run(async () => { await InitializeAsync(); });
-            }
         }
 
 

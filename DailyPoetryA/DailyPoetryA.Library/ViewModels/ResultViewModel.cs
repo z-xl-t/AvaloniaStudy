@@ -25,7 +25,12 @@ namespace DailyPoetryA.Library.ViewModels
             _poetryStorage = poetryStorage;
 
             // 构造函数可以赋初始值
-            OnInitializedCommad = new AsyncRelayCommand(OnInitializedAsync); 
+            OnInitializedCommad = new AsyncRelayCommand(OnInitializedAsync);
+
+            if (!_poetryStorage.IsInitialized)
+            {
+                Task.Run(async () => { await _poetryStorage.InitializeAsync(); });
+            }
         }
 
         public ICommand OnInitializedCommad { get;}

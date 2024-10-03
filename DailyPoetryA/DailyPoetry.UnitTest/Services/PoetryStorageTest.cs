@@ -1,4 +1,5 @@
 ﻿using DailyPoetry.UnitTest.Helpers;
+<<<<<<< HEAD
 using DailyPoetryA.Library.Models;
 using DailyPoetryA.Library.Services;
 using Moq;
@@ -6,6 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+=======
+using DailyPoetryA.Library.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+>>>>>>> 96b15d3df4050e9ba7814cbc75b48209ad13b664
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,6 +45,7 @@ namespace DailyPoetry.UnitTest.Services
         [Fact]
         public async Task InitialzeAsync_Default()
         {
+<<<<<<< HEAD
             // Mock 模拟 IPreferenceStorage，这是类依赖接口，而不去依赖另一个类的原因。
             // 可以生成一个模拟的空的类实现，传入 PoetryStorage ，从而专注 PoetryStorage 的相关测试
             var preferenceStorageMock = new Mock<IPreferenceStorage>();
@@ -45,10 +53,14 @@ namespace DailyPoetry.UnitTest.Services
 
 
             var poetryStorage = new PoetryStorage(mockPreferenceStorage);
+=======
+            var poetryStorage = new PoetryStorage();
+>>>>>>> 96b15d3df4050e9ba7814cbc75b48209ad13b664
             Assert.False(File.Exists(PoetryStorage.PoetryDbPath));
             await poetryStorage.InitializeAsync();
             Assert.True(File.Exists(PoetryStorage.PoetryDbPath));
         }
+<<<<<<< HEAD
 
         [Fact]
         public void IsInitialized_Default()
@@ -96,5 +108,7 @@ namespace DailyPoetry.UnitTest.Services
             await poetryStorage.CloseAsync();
 
         }
+=======
+>>>>>>> 96b15d3df4050e9ba7814cbc75b48209ad13b664
     }
 }

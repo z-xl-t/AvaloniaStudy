@@ -14,7 +14,7 @@ namespace DailyPoetryA.DependencyInjection
     {
         private readonly IServiceProvider _serviceProvider;
         private static ServiceLocator _current;
-        public static ServiceLocator Current {  get { return _current; } }
+        public static ServiceLocator Current { get => _current; }
         
         
         public ResultViewModel ResultViewModel =>

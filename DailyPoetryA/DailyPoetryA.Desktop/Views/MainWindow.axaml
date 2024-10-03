@@ -3,16 +3,28 @@
         xmlns:vm="using:DailyPoetryA.Desktop.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DailyPoetryA.Desktop.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="DailyPoetryA.Desktop">
+		DataContext="{Binding Path=ResultViewModel , Source={StaticResource ResourceKey=ServiceLocator}}"
+		Title="DailyPoetryA.Desktop">
 
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
-    <Button Content="Hello World"></Button>
+	<i:Interaction.Behaviors>
+		<ia:EventTriggerBehavior EventName="Initialized">
+			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommad}">
+				
+			</ia:InvokeCommandAction>
+		</ia:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+	
+	<!--   x:DataType="vm:MainWindowViewModel"   -->
+	<ItemsControl ItemsSource="{Binding Path=PoetryCollection}">
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<TextBlock Text="{Binding Path=Name}"/>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
 </Window>

@@ -1,9 +1,11 @@
 ﻿using DailyPoetry.UnitTest.Helpers;
+using DailyPoetryA.Library.Models;
 using DailyPoetryA.Library.Services;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,6 +48,53 @@ namespace DailyPoetry.UnitTest.Services
             Assert.False(File.Exists(PoetryStorage.PoetryDbPath));
             await poetryStorage.InitializeAsync();
             Assert.True(File.Exists(PoetryStorage.PoetryDbPath));
+        }
+
+        [Fact]
+        public void IsInitialized_Default()
+        {
+            var preferenceStorageMock = new Mock<IPreferenceStorage>();
+            // 模拟接口的函数行为
+            preferenceStorageMock
+                .Setup(p => p.Get(PoetryStorageConstant.VersionKey, default(int)))
+                .Returns(PoetryStorageConstant.Version);
+
+            var mockPreferenceStorage = preferenceStorageMock.Object;
+            var poetryStorage = new PoetryStorage(mockPreferenceStorage);
+            Assert.True(poetryStorage.IsInitialized);
+
+            // 验证 poetryStorage.IsInitialized 是否调用了一次 Get 函数
+            preferenceStorageMock.Verify(p =>
+            p.Get(PoetryStorageConstant.VersionKey, default(int)), Times.Once());
+
+
+            //preferenceStorageMock.Verify(p =>
+            //p.Get(PoetryStorageConstant.VersionKey, default(int)), Times.Never());
+        }
+
+        [Fact]
+        public async Task GetPoetryAsync_Default()
+        {
+            // 涉及到数据库的测试，必须需要连接数据库
+            var poetryStorage = await PoetryStorageHelper.GetInitializedPoetryStorage();
+            var poetry = await poetryStorage.GetPoetryAsync(10001);
+            Assert.Equal("临江仙 · 夜归临皋", poetry.Name);
+
+            // 手动关闭数据库连接
+            await poetryStorage.CloseAsync();
+        }
+
+        [Fact]
+        public async Task GetPoetriesAsync_Default()
+        {
+            var poetryStorage = await PoetryStorageHelper.GetInitializedPoetryStorage();
+            var poetries = await poetryStorage.GetPoetryListAsync(
+                Expression.Lambda<Func<Poetry, bool>>(Expression.Constant(true),Expression.Parameter(typeof(Poetry), "p")), 
+                0, 
+                int.MaxValue);
+            Assert.Equal(PoetryStorage.NumberPoetry, poetries.Count());
+            await poetryStorage.CloseAsync();
+
         }
     }
 }

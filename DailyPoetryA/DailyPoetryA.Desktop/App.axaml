@@ -2,14 +2,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="DailyPoetryA.Desktop.App"
              xmlns:local="using:DailyPoetryA.Desktop"
-             xmlns:semi="https://irihi.tech/semi"
+             xmlns:ddi="clr-namespace:DailyPoetryA.DependencyInjection;assembly=DailyPoetryA.DependencyInjection"
+			 xmlns:semi="https://irihi.tech/semi"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-  
+
+	<Application.Resources>
+		<ResourceDictionary>
+			<ddi:ServiceLocator x:Key="ServiceLocator"></ddi:ServiceLocator>
+		</ResourceDictionary>
+	</Application.Resources>
+	
     <Application.Styles>
         <semi:SemiTheme Locale="zh-CN" />
     </Application.Styles>

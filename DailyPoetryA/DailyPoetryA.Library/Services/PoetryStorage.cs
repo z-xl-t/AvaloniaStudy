@@ -19,7 +19,7 @@ namespace DailyPoetryA.Library.Services
         public static readonly string PoetryDbPath = PathHelper.GetLocalFilePath(DbName);
 
         private SQLiteAsyncConnection _connection;
-        private SQLiteAsyncConnection connection =>
+        private SQLiteAsyncConnection Connection =>
             _connection ??= new SQLiteAsyncConnection(PoetryDbPath);
 
 
@@ -28,6 +28,10 @@ namespace DailyPoetryA.Library.Services
         public PoetryStorage(IPreferenceStorage preferenceStorage)
         {
             _preferenceStorage = preferenceStorage;
+
+            if (!IsInitialized) {
+                Task.Run(async () => { await InitializeAsync(); });
+            }
         }
 
 
@@ -35,14 +39,14 @@ namespace DailyPoetryA.Library.Services
             _preferenceStorage.Get(PoetryStorageConstant.VersionKey, 
                 default(int)) == PoetryStorageConstant.Version;
 
-        public Task<Poetry> GetPoetryAsync(int id)
+        public async Task<Poetry> GetPoetryAsync(int id)
         {
-            throw new NotImplementedException();
+            return await Connection.Table<Poetry>().FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<IList<Poetry>> GetPoetryListAsync(Expression<Func<Poetry, bool>> where, int skip, int take)
+        public async Task<IList<Poetry>> GetPoetryListAsync(Expression<Func<Poetry, bool>> where, int skip, int take)
         {
-            throw new NotImplementedException();
+            return await Connection.Table<Poetry>().Where(where).Skip(skip).Take(take).ToListAsync();
         }
 
         public async Task InitializeAsync()
@@ -64,9 +68,10 @@ namespace DailyPoetryA.Library.Services
             _preferenceStorage.Set(PoetryStorageConstant.VersionKey, PoetryStorageConstant.Version);
 
         }
+
+        // 不是业务要求，不修改接口，只在业务类中创建
+        public async Task CloseAsync() => await Connection.CloseAsync();
     }
-
-
     // 静态类充当全局变量包
     public static class PoetryStorageConstant
     {

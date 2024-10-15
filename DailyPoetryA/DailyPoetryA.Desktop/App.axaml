@@ -11,6 +11,7 @@
         <local:ViewLocator/>
     </Application.DataTemplates>
 
+	<!-- 以资源的形式，初始化 依赖注入容器 单例 -->
 	<Application.Resources>
 		<ResourceDictionary>
 			<ddi:ServiceLocator x:Key="ServiceLocator"></ddi:ServiceLocator>
@@ -19,5 +20,6 @@
 	
     <Application.Styles>
         <semi:SemiTheme Locale="zh-CN" />
+		<StyleInclude Source="avares://AvaloniaInfiniteScrolling.Control/AvaloniaInfiniteScrollControlStyle.axaml" />
     </Application.Styles>
 </Application>

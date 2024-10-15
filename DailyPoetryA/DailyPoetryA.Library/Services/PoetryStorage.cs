@@ -14,8 +14,8 @@ namespace DailyPoetryA.Library.Services
     public class PoetryStorage : IPoetryStorage
     {
         // 写死数据库里的数据个数，学习用；
-        public const int NumberPoetry = 30;
-        public const string DbName = "poetrydb.sqlite3";
+        public static int NumberPoetry = 30;
+        public static string DbName = "poetrydb.sqlite3";
         public static readonly string PoetryDbPath = PathHelper.GetLocalFilePath(DbName);
 
         private SQLiteAsyncConnection _connection;

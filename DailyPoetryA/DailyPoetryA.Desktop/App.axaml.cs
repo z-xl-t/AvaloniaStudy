@@ -3,7 +3,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using DailyPoetryA.DependencyInjection;
 using DailyPoetryA.Desktop.Views;
+using DailyPoetryA.Library.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace DailyPoetryA.Desktop;
 
@@ -28,6 +32,20 @@ public partial class App : Application
             //};
 
             desktop.MainWindow = new MainWindow();
+
+
+            // »ñÈ¡ ServiceLocator ÊµÀý
+            var serviceLocator = this.Resources["ServiceLocator"] as ServiceLocator;
+
+            if (serviceLocator != null)
+            {
+                var poetryStorage = serviceLocator.ServiceProvider.GetService<IPoetryStorage>();
+
+                if (poetryStorage != null && !poetryStorage.IsInitialized)
+                {
+                    Task.Run( async () => await poetryStorage.InitializeAsync());
+                }
+            }
         }
 
         base.OnFrameworkInitializationCompleted();

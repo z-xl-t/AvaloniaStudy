@@ -5,26 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
 		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+		xmlns:ais="using:AvaloniaInfiniteScrolling"
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DailyPoetryA.Desktop.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
 		DataContext="{Binding Path=ResultViewModel , Source={StaticResource ResourceKey=ServiceLocator}}"
 		Title="DailyPoetryA.Desktop">
 
-	<i:Interaction.Behaviors>
+	<!--<i:Interaction.Behaviors>
 		<ia:EventTriggerBehavior EventName="Initialized">
-			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommad}">
-				
-			</ia:InvokeCommandAction>
+			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommad}"/>
 		</ia:EventTriggerBehavior>
-	</i:Interaction.Behaviors>
-	
+	</i:Interaction.Behaviors>-->
 	<!--   x:DataType="vm:MainWindowViewModel"   -->
-	<ItemsControl ItemsSource="{Binding Path=PoetryCollection}">
-		<ItemsControl.ItemTemplate>
+	<ais:AvaloniaInfiniteScrollControl ItemsSource="{Binding Path=PoetryCollection}">
+		<ais:AvaloniaInfiniteScrollControl.ItemTemplate>
 			<DataTemplate>
-				<TextBlock Text="{Binding Path=Name}"/>
+				<TextBlock Text="{Binding Path=Name}"></TextBlock>
 			</DataTemplate>
-		</ItemsControl.ItemTemplate>
-	</ItemsControl>
+		</ais:AvaloniaInfiniteScrollControl.ItemTemplate>
+	</ais:AvaloniaInfiniteScrollControl>
+	
 </Window>

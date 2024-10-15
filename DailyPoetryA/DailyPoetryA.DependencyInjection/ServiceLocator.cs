@@ -12,23 +12,18 @@ namespace DailyPoetryA.DependencyInjection
 {
     public class ServiceLocator
     {
-        private readonly IServiceProvider _serviceProvider;
-        private static ServiceLocator _current;
-        public static ServiceLocator Current { get => _current; }
-        
-        
+        public  IServiceProvider ServiceProvider { get; }
+
+
         public ResultViewModel ResultViewModel =>
-            _serviceProvider.GetRequiredService<ResultViewModel>();
+            ServiceProvider.GetRequiredService<ResultViewModel>();
         public ServiceLocator() {
             var serviceCollection = new ServiceCollection();
-
             serviceCollection.AddSingleton<ResultViewModel>();
             serviceCollection.AddSingleton<IPreferenceStorage,FilePreferenceStorage>();
             serviceCollection.AddSingleton<IPoetryStorage, PoetryStorage>();
+            ServiceProvider = serviceCollection.BuildServiceProvider();
 
-            _serviceProvider = serviceCollection.BuildServiceProvider();
-
-            _current = this;
         }
     }
 }

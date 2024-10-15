@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DailyPoetryA.Library.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace DailyPoetryA.Library.Services
 {
     public interface ITodayPoetryService
     {
-        Task<string> GetTokenAsync();
+        Task<TodayPoetry> GetTodayPoetryAsync();
     }
 }

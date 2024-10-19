@@ -3,7 +3,6 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using DailyPoetryA.DependencyInjection;
 using DailyPoetryA.Desktop.Views;
 using DailyPoetryA.Library.Services;
 using Microsoft.Extensions.DependencyInjection;

@@ -5,6 +5,7 @@ using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using DailyPoetryA.Desktop.Views;
 using DailyPoetryA.Library.Services;
+using DailyPoetryA.Library.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
@@ -36,6 +37,7 @@ public partial class App : Application
             // 获取 ServiceLocator 实例
             var serviceLocator = this.Resources["ServiceLocator"] as ServiceLocator;
 
+            // 初始化数据库
             if (serviceLocator != null)
             {
                 var poetryStorage = serviceLocator.ServiceProvider.GetService<IPoetryStorage>();
@@ -45,6 +47,9 @@ public partial class App : Application
                     Task.Run( async () => await poetryStorage.InitializeAsync());
                 }
             }
+            // 导航测试
+            serviceLocator.ServiceProvider
+                .GetService<IRootNavigationService>().NavigateTo(nameof(TodayViewModel));
         }
 
         base.OnFrameworkInitializationCompleted();

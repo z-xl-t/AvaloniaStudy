@@ -8,16 +8,16 @@
 			 RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-    <Application.DataTemplates>
-        <local:ViewLocator/>
-    </Application.DataTemplates>
-
 	<!-- 以资源的形式，初始化 依赖注入容器 单例 -->
 	<Application.Resources>
 		<ResourceDictionary>
 			<ddi:ServiceLocator x:Key="ServiceLocator"></ddi:ServiceLocator>
 		</ResourceDictionary>
 	</Application.Resources>
+
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
 	
     <Application.Styles>
 		

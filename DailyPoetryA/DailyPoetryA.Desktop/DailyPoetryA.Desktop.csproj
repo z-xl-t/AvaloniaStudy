@@ -25,10 +25,17 @@
         <PackageReference Include="Irihi.Ursa" Version="1.4.0" />
         <PackageReference Include="Irihi.Ursa.Themes.Semi" Version="1.4.0" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
+        <PackageReference Include="Projektanker.Icons.Avalonia.FontAwesome" Version="9.4.1" />
         <PackageReference Include="Semi.Avalonia" Version="11.1.0.4" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\DailyPoetryA.Library\DailyPoetryA.Library.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Views\TodayView.axaml.cs">
+        <DependentUpon>TodayView.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

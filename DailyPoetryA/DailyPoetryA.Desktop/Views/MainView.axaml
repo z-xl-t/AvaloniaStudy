@@ -2,32 +2,92 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:devm="using:DailyPoetryA.Library.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              xmlns:icon="https://github.com/projektanker/icons.avalonia"
+			 xmlns:lvm="using:DailyPoetryA.Library.ViewModels"
+			 xmlns:i="using:Avalonia.Xaml.Interactivity"
+			 xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
 			 x:Class="DailyPoetryA.Desktop.Views.MainView">
+	<Design.DataContext>
+		<devm:MainViewModel/>
+	</Design.DataContext>
+
+
+	<i:Interaction.Behaviors>
+		<ia:EventTriggerBehavior EventName="Initialized">
+			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommand}"/>
+		</ia:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+	
 	<SplitView DisplayMode="Overlay">
-		<SplitView.Pane></SplitView.Pane>
+		<SplitView.Pane>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="50"/>
+					<RowDefinition Height="*"/>
+				</Grid.RowDefinitions>
+				<Grid Grid.Row="0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+					<Button Grid.Column="0" 
+							Background="#3498DB"
+							VerticalAlignment="Stretch" 
+							HorizontalAlignment="Stretch"
+							Command="{Binding ClosePaneCommand}">
+						<icon:Icon Foreground="#ffffff" Value="fa-x"></icon:Icon>
+					</Button>
+					<Grid Grid.Column="1">
+						<Label Foreground="#3498DB" VerticalAlignment="Center"
+							   FontSize="20" Margin="10 0 0 0" Content="每日诗词">
+							
+						</Label>
+					</Grid>
+				</Grid> 
+				<!-- 另外一种绑定方式 ItemsSource="{Binding  Source={x:Static lvm:MenuItem.MenuItems}} 直接绑定来源 -->
+				<ListBox Grid.Row="1" ItemsSource="{Binding  Source={x:Static lvm:MenuItem.MenuItems}}"
+						 SelectedItem="{Binding Path=SelectedMenuItem, Mode=TwoWay}"
+						 >
+					<ListBox.ItemTemplate>
+						<DataTemplate>
+							<Label Content="{Binding Name}" FontSize="20" Margin="50,5,0,5"/>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+					
+				</ListBox>
+			</Grid>
+			
+		</SplitView.Pane>
 		<SplitView.Content>
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="50" />
 					<RowDefinition Height="*"/>
 				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="Auto"/>
-					<ColumnDefinition Width="*"/>
-				</Grid.ColumnDefinitions>
-				<Button Grid.Column="0" Width="50" HorizontalAlignment="Stretch">
-					<icon:Icon Foreground="#3498DB" Value="fa-bars"></icon:Icon>
-				</Button>
-				<Button Grid.Column="1" Width="50" HorizontalAlignment="Stretch">
-					<icon:Icon Foreground="#3498DB" Value="fa-arrow-left"></icon:Icon>
-				</Button>
-				<Grid Grid.Column="2" Background="#3498DB">
-					<Label Foreground="White" VerticalAlignment="Center" FontSize="20" Margin="10 0 0 0">
-						111
-					</Label>
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="50"/>
+						<ColumnDefinition Width="*"/>
+					</Grid.ColumnDefinitions>
+				
+					<Button Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+						<icon:Icon Foreground="#3498DB" Value="fa-bars"></icon:Icon>
+					</Button>
+					<Button Grid.Column="1"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+						<icon:Icon Foreground="#3498DB" Value="fa-arrow-left"></icon:Icon>
+					</Button>
+					<Grid Grid.Column="2" Background="#3498DB">
+						<Label Foreground="White" VerticalAlignment="Center" FontSize="20" Margin="10 0 0 0" Content="{Binding Title}">
+						</Label>
+					</Grid>
+				</Grid>
+				<Grid Grid.Row="1">
+					<ContentControl Content="{Binding Content}">
+						
+					</ContentControl>
 				</Grid>
 			</Grid>
 		</SplitView.Content>

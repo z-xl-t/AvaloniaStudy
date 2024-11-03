@@ -1,4 +1,5 @@
-﻿using DailyPoetryA.Library.Services;
+﻿using DailyPoetryA.Desktop.Views;
+using DailyPoetryA.Library.Services;
 using DailyPoetryA.Library.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,12 +14,20 @@ namespace DailyPoetryA.Desktop.Services
     {
         public void NavigateTo(string view)
         {
-            if (view == nameof(TodayViewModel))
+            if (view == RootNavigationConstant.InitializationView)
             {
 
-                var vm = ServiceLocator.Current.ServiceProvider.GetRequiredService<TodayViewModel>();
+            }else if (view == RootNavigationConstant.MainView)
+            {
+                var vm = ServiceLocator.Current.ServiceProvider.GetRequiredService<MainViewModel>();
 
                 ServiceLocator.Current.MainWindowViewModel.Content = vm;
+
+                // 测试
+                var todayvm = ServiceLocator.Current.ServiceProvider.GetRequiredService<TodayViewModel>();
+
+                vm.Content = todayvm;
+
             }
         }
         

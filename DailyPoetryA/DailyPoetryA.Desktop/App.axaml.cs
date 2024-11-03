@@ -31,11 +31,20 @@ public partial class App : Application
             //    DataContext = new MainWindowViewModel(),
             //};
 
-            desktop.MainWindow = new MainWindow();
-
 
             // 获取 ServiceLocator 实例
             var serviceLocator = this.Resources["ServiceLocator"] as ServiceLocator;
+
+            // 手动设置主界面的 View 和 ViewModel， View 中的事件触发器会失效
+            desktop.MainWindow = new MainWindow();
+            desktop.MainWindow.DataContext = serviceLocator.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+
+            // 需要手动触发OnInitializedCommand
+            var command = desktop.MainWindow.DataContext as MainWindowViewModel;
+            if (command != null && command.OnInitializedCommand.CanExecute(null))
+            {
+                command.OnInitializedCommand.Execute(null);
+            }
 
             // 初始化数据库
             if (serviceLocator != null)
@@ -47,9 +56,11 @@ public partial class App : Application
                     Task.Run( async () => await poetryStorage.InitializeAsync());
                 }
             }
-            // 导航测试
-            serviceLocator.ServiceProvider
-                .GetService<IRootNavigationService>().NavigateTo(nameof(TodayViewModel));
+
+
+            //// 导航首页测试
+            //serviceLocator.ServiceProvider
+            //    .GetService<IRootNavigationService>().NavigateTo(nameof(MainView));
         }
 
         base.OnFrameworkInitializationCompleted();

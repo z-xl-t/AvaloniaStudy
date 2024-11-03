@@ -29,7 +29,10 @@ namespace DailyPoetryA.Library.ViewModels
 
         public ICommand OnInitializedCommand { get;  }
 
-        
+        public TodayViewModel()
+        {
+            
+        }
 
         public TodayViewModel(ITodayPoetryService todayPoetryService)
         {

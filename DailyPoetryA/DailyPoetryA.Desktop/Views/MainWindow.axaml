@@ -7,7 +7,34 @@
 		mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="DailyPoetryA.Desktop.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-		DataContext="{Binding Path=MainWindowViewModel , Source={StaticResource ResourceKey=ServiceLocator}}"
+		xmlns:i="using:Avalonia.Xaml.Interactivity"
+		xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+
 		Content="{Binding Content}"
 		Title="DailyPoetryA.Desktop">
+	<!--
+	可以不用这种模式绑定，只需要在 App.axaml.cs 中手动获取一个 viewmodel 实例并赋值即可
+	DataContext="{Binding Path=MainWindowViewModel , Source={StaticResource ResourceKey=ServiceLocator}}"
+		
+	 <Window.DataContext>
+        <Binding Path="MainWindowViewModel" Source="{StaticResource ResourceKey=ServiceLocator}" />
+    </Window.DataContext>
+	-->
+	<!--
+	
+	如果手动创建MainWindow的实例并设置其数据上下文时，XAML中的事件触发器（如EventTriggerBehavior）不会自动执行，
+	因为这些触发器是在XAML解析和实例化过程中工作的。然而，对于按钮（Button）上的点击事件，情况可能会有所不同。
+	
+	如果是通过 ViewModel 反向生成的 View，那么 事件触发器就会执行
+
+	如果你在XAML中为按钮定义了点击事件，并且使用了数据绑定来关联一个命令，
+	那么这个命令会在按钮被点击时执行，无论MainWindow的实例是如何创建的。
+	这是因为按钮的点击事件是通过WPF的事件路由机制来处理的，它不依赖于XAML的解析和实例化过程。
+	<i:Interaction.Behaviors>
+		<ia:EventTriggerBehavior EventName="Initialized">
+			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommand}"/>
+		</ia:EventTriggerBehavior>
+	</i:Interaction.Behaviors>
+
+	-->
 </Window>

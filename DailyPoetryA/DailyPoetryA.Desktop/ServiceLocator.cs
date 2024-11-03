@@ -23,7 +23,7 @@ namespace DailyPoetryA.Desktop
                 {
                     return _current;
                 }
-                // 实际上依赖注入实例，是在程序初始化时，用资源的形式生成了一个实例
+                // 实际上依赖注入的实例，是在程序初始化时，用资源的形式生成了一个实例
                 if (Application.Current.TryGetResource(nameof(ServiceLocator),null, out var value) &&
                     value is ServiceLocator serviceLocator)
                 {
@@ -40,10 +40,14 @@ namespace DailyPoetryA.Desktop
         public ServiceLocator()
         {
             var serviceCollection = new ServiceCollection();
+
+            // 注册 ViewModel
             serviceCollection.AddSingleton<ResultViewModel>();
             serviceCollection.AddSingleton<TodayViewModel>();
             serviceCollection.AddSingleton<MainWindowViewModel>();
+            serviceCollection.AddSingleton<MainViewModel>();
 
+            // 注册服务
             serviceCollection.AddSingleton<IPreferenceStorage, FilePreferenceStorage>();
             serviceCollection.AddSingleton<IPoetryStorage, PoetryStorage>();
             serviceCollection.AddSingleton<ITodayPoetryService, JinrishiciService>();

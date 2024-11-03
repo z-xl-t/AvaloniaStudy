@@ -8,6 +8,7 @@ namespace DailyPoetryA.Library.Services
 {
     public interface IMenuNavigationService
     {
+        void NavigateTo(string view);
     }
     public static class MenuNavigationConstant
     {

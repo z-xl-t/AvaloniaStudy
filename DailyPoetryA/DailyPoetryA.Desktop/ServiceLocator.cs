@@ -53,8 +53,10 @@ namespace DailyPoetryA.Desktop
             serviceCollection.AddSingleton<ITodayPoetryService, JinrishiciService>();
             serviceCollection.AddSingleton<IAlertService, AlertService>();
 
-            // 导航注册
+            // 导航服务注册
             serviceCollection.AddSingleton<IRootNavigationService, RootNavigationService>();
+            serviceCollection.AddSingleton<IMenuNavigationService, MenuNavigationService>();
+            serviceCollection.AddSingleton<IContentNavigationService, ContentNavigationService>();
 
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }

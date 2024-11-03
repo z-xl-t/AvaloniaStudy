@@ -19,15 +19,8 @@ namespace DailyPoetryA.Desktop.Services
 
             }else if (view == RootNavigationConstant.MainView)
             {
-                var vm = ServiceLocator.Current.ServiceProvider.GetRequiredService<MainViewModel>();
-
-                ServiceLocator.Current.MainWindowViewModel.Content = vm;
-
-                // 测试
-                var todayvm = ServiceLocator.Current.ServiceProvider.GetRequiredService<TodayViewModel>();
-
-                vm.Content = todayvm;
-
+                var mainVm = ServiceLocator.Current.ServiceProvider.GetRequiredService<MainViewModel>();
+                ServiceLocator.Current.MainWindowViewModel.Content = mainVm;
             }
         }
         

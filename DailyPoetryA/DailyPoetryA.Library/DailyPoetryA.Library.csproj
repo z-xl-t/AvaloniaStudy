@@ -6,9 +6,6 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="poetrydb.sqlite3" />
-  </ItemGroup>
 
   <ItemGroup>
 	 <!-- 添加注释 -->
@@ -16,6 +13,9 @@
 		  <!-- 嵌入的资源，默认会自动命名 空间名+文件名 DailyPoetryA.Library.poetrydb.sqlite3 -->
 		  <!-- 强制逻辑命名 -->
 		  <LogicalName>poetrydb.sqlite3</LogicalName>
+	  </EmbeddedResource>
+	  <EmbeddedResource Include="todayImage.bin">
+		  <LogicalName>todayImage.bin</LogicalName>
 	  </EmbeddedResource>
   </ItemGroup>
 

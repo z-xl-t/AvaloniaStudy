@@ -3,6 +3,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
+using DailyPoetryA.Desktop.Services;
 using DailyPoetryA.Desktop.Views;
 using DailyPoetryA.Library.Services;
 using DailyPoetryA.Library.ViewModels;
@@ -35,9 +36,10 @@ public partial class App : Application
             // 获取 ServiceLocator 实例
             var serviceLocator = this.Resources["ServiceLocator"] as ServiceLocator;
 
-            // 手动设置主界面的 View 和 ViewModel， View 中的事件触发器会失效
+            //// 手动设置主界面的 View 和 ViewModel， View 中的事件触发器会失效
             desktop.MainWindow = new MainWindow();
             desktop.MainWindow.DataContext = serviceLocator.ServiceProvider.GetRequiredService<MainWindowViewModel>();
+
 
             // 需要手动触发OnInitializedCommand
             var command = desktop.MainWindow.DataContext as MainWindowViewModel;
@@ -46,16 +48,16 @@ public partial class App : Application
                 command.OnInitializedCommand.Execute(null);
             }
 
-            // 初始化数据库
-            if (serviceLocator != null)
-            {
-                var poetryStorage = serviceLocator.ServiceProvider.GetService<IPoetryStorage>();
+            //// 初始化数据库
+            //if (serviceLocator != null)
+            //{
+            //    var poetryStorage = serviceLocator.ServiceProvider.GetService<IPoetryStorage>();
 
-                if (poetryStorage != null && !poetryStorage.IsInitialized)
-                {
-                    Task.Run( async () => await poetryStorage.InitializeAsync());
-                }
-            }
+            //    if (poetryStorage != null && !poetryStorage.IsInitialized)
+            //    {
+            //        Task.Run( async () => await poetryStorage.InitializeAsync());
+            //    }
+            //}
 
 
             //// 导航首页测试

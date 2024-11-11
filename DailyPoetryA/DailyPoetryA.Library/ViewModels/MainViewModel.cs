@@ -41,6 +41,7 @@ namespace DailyPoetryA.Library.ViewModels
             set => SetProperty(ref _isPaneOpen, value);
         }
         public ICommand OnInitializedCommand { get; }
+        public ICommand OnMenuTappendCommand { get; }
         public ICommand GoBackCommand { get; }
         public ICommand PaneToOpenCommand { get; }
         public ICommand PaneToCloseCommand { get; }
@@ -62,9 +63,21 @@ namespace DailyPoetryA.Library.ViewModels
 
             _menuNavigationService = menuNavigationService;
             OnInitializedCommand = new RelayCommand(OnInitialized);
+            OnMenuTappendCommand = new RelayCommand(OnMenuTapped);
             GoBackCommand = new RelayCommand(GoBack);
             PaneToOpenCommand = new RelayCommand(PaneToOpen);
             PaneToCloseCommand = new RelayCommand(PaneToClose);
+        }
+
+        private void OnMenuTapped()
+        {
+            if (SelectedMenuItem is null) 
+            {
+                return;
+            }
+            _menuNavigationService.NavigateTo(SelectedMenuItem.View);
+            Title = SelectedMenuItem.Name;
+            IsPaneOpen = false;
         }
 
         private void PaneToClose()

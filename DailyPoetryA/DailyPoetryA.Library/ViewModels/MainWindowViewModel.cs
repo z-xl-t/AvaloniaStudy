@@ -35,7 +35,7 @@ namespace DailyPoetryA.Library.ViewModels
 
         public void OnInitialized()
         {
-            _rootNavigationService.NavigateTo(RootNavigationConstant.MainView);
+            _rootNavigationService.NavigateTo(RootNavigationConstant.InitializationView);
         }
     }
 }

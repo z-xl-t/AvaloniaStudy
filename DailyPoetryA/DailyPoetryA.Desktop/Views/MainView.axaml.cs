@@ -13,4 +13,8 @@ public partial class MainView : UserControl
     {
         InitializeComponent();
     }
+
+    private void Binding(object? sender, Avalonia.Input.TappedEventArgs e)
+    {
+    }
 }

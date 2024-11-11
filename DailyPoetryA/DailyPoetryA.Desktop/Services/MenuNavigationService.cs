@@ -21,11 +21,14 @@ namespace DailyPoetryA.Desktop.Services
                 mainVm.SetMenuAndContent(MenuNavigationConstant.TodayView, todayVm);
             }
             else if (view == MenuNavigationConstant.QueryView)
-            { 
+            {
+                var queryVm = ServiceLocator.Current.ServiceProvider.GetRequiredService<QueryViewModel>();
+                mainVm.SetMenuAndContent(MenuNavigationConstant.TodayView, queryVm);
             }
             else if (view == MenuNavigationConstant.FavoriteView)
             {
-
+                var favoriteVm= ServiceLocator.Current.ServiceProvider.GetRequiredService<FavoriteViewModel>();
+                mainVm.SetMenuAndContent(MenuNavigationConstant.TodayView, favoriteVm);
             }
             else
             {

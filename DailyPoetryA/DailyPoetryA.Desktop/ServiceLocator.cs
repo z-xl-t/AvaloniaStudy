@@ -46,7 +46,9 @@ namespace DailyPoetryA.Desktop
             serviceCollection.AddSingleton<TodayViewModel>();
             serviceCollection.AddSingleton<MainWindowViewModel>();
             serviceCollection.AddSingleton<MainViewModel>();
-
+            serviceCollection.AddSingleton<QueryViewModel>();
+            serviceCollection.AddSingleton<FavoriteViewModel>();
+            serviceCollection.AddSingleton<InitializationViewModel>();
             // 注册服务
             serviceCollection.AddSingleton<IPreferenceStorage, FilePreferenceStorage>();
             serviceCollection.AddSingleton<IPoetryStorage, PoetryStorage>();

@@ -116,6 +116,11 @@ namespace DailyPoetryA.Library.ViewModels
             Title = SelectedMenuItem.Name;
             IsPaneOpen = false;
         }
+        public void SetContent(string view, ViewModelBase content)
+        {
+            PushContent(content);
+        }
+
         public void GoBack() => PopContent();
 
     }

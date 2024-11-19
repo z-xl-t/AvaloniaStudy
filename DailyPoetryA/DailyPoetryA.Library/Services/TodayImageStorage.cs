@@ -17,8 +17,8 @@ namespace DailyPoetryA.Library.Services
         public static readonly string CopyrightKey = nameof(TodayImageStorage)  + "." + nameof(TodayImage.Copyright);
         public static readonly string CopyrightLinkKey = nameof(TodayImageStorage) + "." + nameof(TodayImage.CopyrightLink);
         
-        public const string FullStartDateDefault = "20241111";
-        public static readonly DateTime ExpriesAtDefault = new(2024,11,11);
+        public const string FullStartDateDefault = "202411110000";
+        public static readonly DateTime ExpriesAtDefault = new(2024,11,11,0,0,0);
         public const string CopyrightDefault = "Salt field province vitnam work (@ Quangpraha/Pixabay)";
         public const string CopyrightLinkDefault = "https://pixabay.com/photos/salt-field-province-vietnam-work";
         public const string Filename = "todayImage.bin";
@@ -62,7 +62,6 @@ namespace DailyPoetryA.Library.Services
         }
         public async Task SaveTodayImageAsync(TodayImage todayImage, bool isSavingExpiresAt)
         {
-            _preferenceStorage.Set(ExpriesAtKey, ExpriesAtDefault);
             if (isSavingExpiresAt)
             {
                 return;
@@ -72,11 +71,10 @@ namespace DailyPoetryA.Library.Services
                 throw new ArgumentException($"Null image bytes.", nameof(todayImage));
 
             }
-
-            _preferenceStorage.Set(FullStartDateKey, FullStartDateDefault);
-            _preferenceStorage.Set(ExpriesAtKey, ExpriesAtDefault);
-            _preferenceStorage.Set(CopyrightKey, CopyrightDefault);
-            _preferenceStorage.Set(CopyrightLinkKey, CopyrightLinkDefault);
+            _preferenceStorage.Set(FullStartDateKey, todayImage.FullStartDate);
+            _preferenceStorage.Set(ExpriesAtKey, todayImage.ExpiresAt);
+            _preferenceStorage.Set(CopyrightKey, todayImage.Copyright);
+            _preferenceStorage.Set(CopyrightLinkKey, todayImage.CopyrightLink);
 
             await using var imageFileStream = new FileStream(TodayImagePath, FileMode.Create);
             await imageFileStream.WriteAsync(todayImage.ImageBytes,0, todayImage.ImageBytes.Length);

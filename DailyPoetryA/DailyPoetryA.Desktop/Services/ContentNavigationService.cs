@@ -11,8 +11,16 @@ namespace DailyPoetryA.Desktop.Services
 {
     public class ContentNavigationService : IContentNavigationService
     {
-        public void NavigateTo(string view)
+        public void NavigateTo(string view, object parameter = null)
         {
+            var mainVm = ServiceLocator.Current.ServiceProvider.GetRequiredService<MainViewModel>();
+
+            if (view == ContentNavigationConstant.TodayDetailView)
+            {
+                var todayDetailVm = ServiceLocator.Current.ServiceProvider.GetRequiredService<TodayDetailViewModel>();
+                todayDetailVm.SetParameter(parameter);
+                mainVm.SetContent(ContentNavigationConstant.TodayDetailView, todayDetailVm);
+            }
         }
     }
 }

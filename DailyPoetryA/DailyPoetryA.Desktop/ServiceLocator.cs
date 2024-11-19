@@ -49,6 +49,7 @@ namespace DailyPoetryA.Desktop
             serviceCollection.AddSingleton<QueryViewModel>();
             serviceCollection.AddSingleton<FavoriteViewModel>();
             serviceCollection.AddSingleton<InitializationViewModel>();
+            serviceCollection.AddSingleton<TodayDetailViewModel>();
             // 注册服务
             serviceCollection.AddSingleton<IPreferenceStorage, FilePreferenceStorage>();
             serviceCollection.AddSingleton<IPoetryStorage, PoetryStorage>();
@@ -59,7 +60,8 @@ namespace DailyPoetryA.Desktop
             serviceCollection.AddSingleton<IRootNavigationService, RootNavigationService>();
             serviceCollection.AddSingleton<IMenuNavigationService, MenuNavigationService>();
             serviceCollection.AddSingleton<IContentNavigationService, ContentNavigationService>();
-
+            serviceCollection.AddSingleton<ITodayImageService, BingImageService>();
+            serviceCollection.AddSingleton<ITodayImageStorage, TodayImageStorage>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
     }

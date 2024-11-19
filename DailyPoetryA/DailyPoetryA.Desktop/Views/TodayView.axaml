@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 			 xmlns:devm="using:DailyPoetryA.Library.ViewModels"
-             x:Class="DailyPoetryA.Desktop.Views.TodayView"
+              xmlns:lc="using:DailyPoetryA.Desktop.Converters"
+			 x:Class="DailyPoetryA.Desktop.Views.TodayView"
 			 xmlns:i="using:Avalonia.Xaml.Interactivity"
 			 xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
 			 >
@@ -13,7 +14,10 @@
 	<Design.DataContext>
 		<devm:TodayViewModel/>
 	</Design.DataContext>
-
+	<UserControl.Resources>
+		<lc:ByteArrayToBitmapConverter x:Key="ByteArrayToBitmapConverter"></lc:ByteArrayToBitmapConverter>
+	</UserControl.Resources>
+	
 	<i:Interaction.Behaviors>
 		<ia:EventTriggerBehavior EventName="Initialized">
 			<ia:InvokeCommandAction Command="{Binding Path=OnInitializedCommand}"/>
@@ -26,6 +30,12 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 		</Grid.ColumnDefinitions>
+
+		<Image 
+			Source="{Binding TodayImage.ImageBytes, Converter={ StaticResource ByteArrayToBitmapConverter }}"
+			Stretch="UniformToFill" />
+		
+		
 		<StackPanel Grid.Column="0" Grid.Row="0"  Margin="8" Background="#66000000" VerticalAlignment="Bottom">
 			<StackPanel Background="#66000000">
 				<Label FontSize="28"

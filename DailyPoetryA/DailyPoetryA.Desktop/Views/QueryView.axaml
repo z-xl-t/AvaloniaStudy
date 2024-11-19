@@ -4,7 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="DailyPoetryA.Desktop.Views.QueryView">
+	<ScrollViewer>
+		<StackPanel Margin="8">
+			<ItemsControl ItemsSource="{Binding FilterViewModelCollection}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel>
+							
+							<TextBox Text="{Binding  Content}"></TextBox>
+							<Button Command="{Binding AddCommand}">添加</Button>
+							<Button Command="{Binding DeleteCommand}">删除</Button>
+						</StackPanel>
 
-		Welcome to Avalonia View!
-
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			</StackPanel>
+		</ScrollViewer>
+	
 </UserControl>
